@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Rohan Company">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#080808">
+
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
+<link rel="apple-touch-icon" sizes="180x180" href="logo.png">
+
+<script>
+    (function(document, window) {
+        var standalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+        if (standalone) {
+            document.addEventListener('click', function(e) {
+                var target = e.target;
+                while (target && target.nodeName !== 'A' && target.nodeName !== 'HTML') {
+                    target = target.parentNode;
+                }
+                if (target && target.nodeName === 'A') {
+                    var href = target.getAttribute('href');
+                    if (href && !href.startsWith('http') && !href.startsWith('javascript:') && href !== '#') {
+                        e.preventDefault();
+                        window.location.href = href;
+                    }
+                }
+            }, true);
+        }
+    })(document, window);
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>گاہک کی تفصیل تبدیل کریں</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 15px; 
+            direction: rtl; 
+            text-align: right; 
+            background-color: #0d0d0d; 
+            color: white; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            transition: background-color 0.25s ease, color 0.25s ease;
+        }
+
+        body.lang-en {
+            direction: ltr !important;
+            text-align: left !important;
+        }
+
+        .form-container { 
+            width: 100%; 
+            max-width: 500px; 
+            padding: 25px; 
+            background: #1a1a1a; 
+            border: 1px solid #ffc107; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 15px rgba(255,193,7,0.2); 
+            position: relative;
+            transition: all 0.25s ease;
+        }
+
+        /* 🔙 اوپر ہیڈر بار: دائیں ٹائٹل اور بائیں جانب بیک بٹن */
+        .header-top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            transition: border-color 0.25s ease;
+        }
+        .header-title { 
+            color: #ffc107; 
+            font-size: 20px; 
+            font-weight: bold; 
+            margin: 0;
+            transition: color 0.25s ease;
+        }
+        
+        /* ⚡ واپس کا بٹن (نیلا بیک گراؤنڈ) */
+        .btn-top-back {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            font-size: 13.5px;
+            font-weight: bold;
+            padding: 6px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .btn-top-back:hover {
+            background-color: #0056b3;
+            color: #ffffff;
+        }
+
+        .form-group { margin-bottom: 15px; }
+        .form-group label { 
+            display: block; 
+            margin-bottom: 6px; 
+            color: #ffc107; 
+            font-size: 14.5px; 
+            font-weight: bold; 
+            transition: color 0.25s ease;
+        }
+        .form-group input { 
+            width: 100%; 
+            padding: 11px 13px; 
+            background: #2a2a2a; 
+            color: white; 
+            border: 1px solid #444; 
+            border-radius: 6px; 
+            font-size: 15px; 
+            font-weight: bold; 
+            outline: none; 
+            transition: all 0.2s ease;
+        }
+        .form-group input:focus { border-color: #00e676; }
+        
+        .btn-save { 
+            width: 100%; 
+            padding: 13px; 
+            background-color: #28a745; 
+            color: white; 
+            border: none; 
+            border-radius: 6px; 
+            font-size: 16.5px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: background 0.2s; 
+            margin-top: 10px; 
+        }
+        .btn-save:hover { opacity: 0.9; }
+
+        /* ☀️ لائٹ موڈ اسٹائلز */
+        body.light-theme {
+            background-color: #f3f4f6;
+            color: #111827;
+        }
+        body.light-theme .form-container {
+            background: #ffffff;
+            border-color: #d97706;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        body.light-theme .header-top-bar {
+            border-bottom-color: #e5e7eb;
+        }
+        body.light-theme .header-title {
+            color: #b45309;
+        }
+        body.light-theme .btn-top-back {
+            background-color: #007bff;
+            color: white;
+        }
+        body.light-theme .btn-top-back:hover {
+            background-color: #0056b3;
+        }
+        body.light-theme .form-group label {
+            color: #b45309;
+        }
+        body.light-theme .form-group input {
+            background: #f9fafb;
+            color: #111827;
+            border-color: #d1d5db;
+        }
+        body.light-theme .form-group input:focus {
+            border-color: #16a34a;
+            background: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container" id="mainEditCustomerContainer">
+        <!-- 🔙 ٹاپ بار -->
+        <div class="header-top-bar">
+            <div class="header-title" id="pageTitle">✏️ گاہک کی معلومات تبدیل کریں</div>
+            <a href="./summary.html" class="btn-top-back" id="btnBack">🔙 واپس</a>
+        </div>
+
+        <form id="editCustomerForm">
+            <!-- ۱۔ نام -->
+            <div class="form-group">
+                <label id="lblCustName">👤 نام گاہک / پارٹی:</label>
+                <input type="text" id="custName" placeholder="گاہک کا نام لکھیں..." required autocomplete="off">
+            </div>
+
+            <!-- ۲۔ کھاتہ نمبر -->
+            <div class="form-group">
+                <label id="lblAccountNo">🔢 کھاتہ نمبر (Account No):</label>
+                <input type="text" id="accountNo" placeholder="کھاتہ نمبر لکھیں..." required autocomplete="off">
+            </div>
+
+            <!-- ۳۔ موبائل نمبر -->
+            <div class="form-group">
+                <label id="lblCustPhone">📱 موبائل نمبر:</label>
+                <input type="tel" id="custPhone" placeholder="موبائل نمبر لکھیں..." autocomplete="off">
+            </div>
+
+            <!-- ۴۔ شناختی کارڈ نمبر -->
+            <div class="form-group">
+                <label id="lblCustCnic">🪪 شناختی کارڈ نمبر (CNIC):</label>
+                <input type="text" id="custCnic" placeholder="شناختی کارڈ نمبر لکھیں..." autocomplete="off">
+            </div>
+
+            <!-- ۵۔ پتہ -->
+            <div class="form-group">
+                <label id="lblCustAddress">📍 پتہ (Address):</label>
+                <input type="text" id="custAddress" placeholder="دکان / شہر کا پتہ لکھیں..." autocomplete="off">
+            </div>
+
+            <button type="submit" class="btn-save" id="btnSave">💾 تبدیلیاں محفوظ کریں</button>
+        </form>
+    </div>
+
+    <script>
+        function applySavedTheme() {
+            let savedTheme = localStorage.getItem('rohan_theme_mode') || 'dark';
+            let themeMeta = document.querySelector('meta[name="theme-color"]');
+
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-theme');
+                if (themeMeta) themeMeta.setAttribute('content', '#f3f4f6');
+            } else {
+                document.body.classList.remove('light-theme');
+                if (themeMeta) themeMeta.setAttribute('content', '#080808');
+            }
+        }
+        applySavedTheme();
+
+        let activeBranchId = localStorage.getItem('active_branch_id') || 'branch_1';
+        let branchOverrides = JSON.parse(localStorage.getItem('rohan_branch_lang_overrides')) || {};
+        let globalLang = localStorage.getItem('rohan_global_lang') || 'ur';
+        let activeBranchLang = localStorage.getItem('active_branch_lang') || branchOverrides[activeBranchId] || globalLang;
+        let isEn = (activeBranchLang === 'en');
+
+        // 🌐 زبان اپلائی کرنا
+        if (isEn) {
+            document.body.classList.add('lang-en');
+            document.documentElement.lang = 'en';
+            document.title = 'Edit Customer Details';
+
+            document.getElementById('pageTitle').innerText = '✏️ Edit Customer Information';
+            document.getElementById('btnBack').innerText = '🔙 Back';
+
+            document.getElementById('lblCustName').innerText = '👤 Customer / Party Name:';
+            document.getElementById('custName').placeholder = 'Enter customer name...';
+
+            document.getElementById('lblAccountNo').innerText = '🔢 Account No:';
+            document.getElementById('accountNo').placeholder = 'Enter account number...';
+
+            document.getElementById('lblCustPhone').innerText = '📱 Mobile Number:';
+            document.getElementById('custPhone').placeholder = 'Enter mobile number...';
+
+            document.getElementById('lblCustCnic').innerText = '🪪 CNIC Number:';
+            document.getElementById('custCnic').placeholder = 'Enter CNIC number...';
+
+            document.getElementById('lblCustAddress').innerText = '📍 Address:';
+            document.getElementById('custAddress').placeholder = 'Enter shop / city address...';
+
+            document.getElementById('btnSave').innerText = '💾 Save Changes';
+        } else {
+            document.body.classList.remove('lang-en');
+            document.documentElement.lang = 'ur';
+            document.title = 'گاہک کی تفصیل تبدیل کریں';
+        }
+
+        // 🎨 برانچ کا کسٹم رنگ لاگو کرنا
+        let savedBranchesConfig = localStorage.getItem('rohan_branches_custom_config_v2');
+        if (savedBranchesConfig) {
+            try {
+                let branches = JSON.parse(savedBranchesConfig);
+                let currentBranch = branches.find(b => b.id === activeBranchId);
+                if (currentBranch && currentBranch.color1) {
+                    let primaryColor = currentBranch.color1;
+                    let container = document.getElementById('mainEditCustomerContainer');
+                    container.style.borderColor = primaryColor;
+                    container.style.boxShadow = `0 4px 18px ${primaryColor}35`;
+
+                    let saveBtn = document.getElementById('btnSave');
+                    if (saveBtn) saveBtn.style.backgroundColor = primaryColor;
+
+                    document.querySelectorAll('.form-group label').forEach(lbl => {
+                        lbl.style.color = primaryColor;
+                    });
+                }
+            } catch(e){}
+        }
+
+        let customerKey = activeBranchId + '_customer_list';
+        let detailsKey = activeBranchId + '_customer_details';
+        let bnamRecordsKey = activeBranchId + '_bnam_records';
+        let currentCustomer = localStorage.getItem('active_ledger_customer') || "";
+
+        // 🔒 اونر چیک: اونر کو معلومات میں ترمیم کی اجازت نہیں
+        if (sessionStorage.getItem('rohan_user_role') === 'owner') {
+            alert(isEn ? "⚠️ You are not authorized to edit customer information!" : "⚠️ آپ کے پاس گاہک کی معلومات تبدیل کرنے کی اجازت نہیں ہے!");
+            window.location.href = './summary.html';
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            if (!currentCustomer) {
+                alert(isEn ? "🛑 Error: No customer selected!" : "🛑 غلطی: کسی گاہک کا انتخاب نہیں کیا گیا!");
+                window.location.href = './summary.html';
+                return;
+            }
+
+            let customerDetails = JSON.parse(localStorage.getItem(detailsKey)) || [];
+            let existingCust = customerDetails.find(c => c.name.toLowerCase() === currentCustomer.toLowerCase());
+
+            document.getElementById('custName').value = currentCustomer;
+
+            if (existingCust) {
+                document.getElementById('accountNo').value = existingCust.accountNo || "";
+                document.getElementById('custPhone').value = (existingCust.phone && existingCust.phone !== "-") ? existingCust.phone : "";
+                document.getElementById('custCnic').value = (existingCust.cnic && existingCust.cnic !== "-") ? existingCust.cnic : "";
+                document.getElementById('custAddress').value = (existingCust.address && existingCust.address !== "-") ? existingCust.address : "";
+            } else {
+                document.getElementById('accountNo').value = "";
+                document.getElementById('custPhone').value = "";
+                document.getElementById('custCnic').value = "";
+                document.getElementById('custAddress').value = "";
+            }
+
+            document.getElementById('custName').focus();
+        });
+
+        document.getElementById('editCustomerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let newName = document.getElementById('custName').value.trim();
+            let newAccount = document.getElementById('accountNo').value.trim();
+            let newPhone = document.getElementById('custPhone').value.trim();
+            let newCnic = document.getElementById('custCnic').value.trim();
+            let newAddress = document.getElementById('custAddress').value.trim();
+
+            if (!newName || !newAccount) {
+                alert(isEn ? "Please enter both name and account number!" : "براہ کرم نام اور کھاتہ نمبر دونوں درج کریں!");
+                return;
+            }
+
+            let customerList = JSON.parse(localStorage.getItem(customerKey)) || [];
+            let customerDetails = JSON.parse(localStorage.getItem(detailsKey)) || [];
+            let bnamRecords = JSON.parse(localStorage.getItem(bnamRecordsKey)) || [];
+
+            if (newName.toLowerCase() !== currentCustomer.toLowerCase() && customerList.some(c => c.toLowerCase() === newName.toLowerCase())) {
+                alert(isEn ? "⚠️ An account with this name already exists!" : "⚠️ اس نام کا کھاتہ پہلے سے موجود ہے!");
+                return;
+            }
+
+            let accountTaken = customerDetails.some(c => c.accountNo.toLowerCase() === newAccount.toLowerCase() && c.name.toLowerCase() !== currentCustomer.toLowerCase());
+            if (accountTaken) {
+                alert(isEn ? `⚠️ Account No. (${newAccount}) is already assigned to another customer!` : `⚠️ کھاتہ نمبر (${newAccount}) پہلے سے کسی دوسرے گاہک کو الاٹ ہو چکا ہے!`);
+                return;
+            }
+
+            let custIdx = customerList.indexOf(currentCustomer);
+            if (custIdx !== -1) {
+                customerList[custIdx] = newName;
+            } else if (!customerList.includes(newName)) {
+                customerList.push(newName);
+            }
+            localStorage.setItem(customerKey, JSON.stringify(customerList));
+
+            let detailIdx = customerDetails.findIndex(c => c.name.toLowerCase() === currentCustomer.toLowerCase());
+            let updatedObj = {
+                name: newName,
+                accountNo: newAccount,
+                phone: newPhone || "-",
+                cnic: newCnic || "-",
+                address: newAddress || "-"
+            };
+
+            if (detailIdx !== -1) {
+                customerDetails[detailIdx] = updatedObj;
+            } else {
+                customerDetails.push(updatedObj);
+            }
+            localStorage.setItem(detailsKey, JSON.stringify(customerDetails));
+
+            let backupCustomers = JSON.parse(localStorage.getItem('factory_customers')) || [];
+            let bIdx = backupCustomers.indexOf(currentCustomer);
+            if (bIdx !== -1) {
+                backupCustomers[bIdx] = newName;
+                localStorage.setItem('factory_customers', JSON.stringify(backupCustomers));
+            }
+
+            if (newName !== currentCustomer) {
+                bnamRecords.forEach(record => {
+                    if (record.customerName === currentCustomer) {
+                        record.customerName = newName;
+                    }
+                });
+                localStorage.setItem(bnamRecordsKey, JSON.stringify(bnamRecords));
+            }
+
+            fetch('http://13.63.233.9:5000/api/customers', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    oldName: currentCustomer,
+                    name: newName,
+                    accountNo: newAccount,
+                    phone: newPhone,
+                    cnic: newCnic,
+                    address: newAddress,
+                    branchId: activeBranchId
+                })
+            }).catch(err => console.error("سرور پر اپڈیٹ کا ایرر:", err));
+
+            localStorage.setItem('active_ledger_customer', newName);
+
+            alert(isEn ? "✅ Customer details updated successfully!" : "✅ گاہک کی تفصیلات کامیابی سے تبدیل ہو گئی ہیں!");
+            window.location.href = './summary.html';
+        });
+    </script>
+</body>
+</html>

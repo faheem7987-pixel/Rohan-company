@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<!-- 📱 اینڈرائیڈ، آئی فون اور کمپیوٹر کے لیے فل اسکرین نیویگیشن کوڈ -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+<!-- 🍏 آئی فون (iOS) کے لیے فل اسکرین ٹیگز -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Rohan Company">
+<link rel="apple-touch-icon" href="logo.png">
+<link rel="apple-touch-icon" sizes="180x180" href="logo.png">
+
+<!-- 🤖 اینڈرائیڈ (Android) اور کروم براؤزر کے لیے فل اسکرین ٹیگز -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#080808">
+<link rel="icon" type="image/png" href="logo.png">
+
+<!-- ⚡ تمام ڈیوائسز (iOS / Android / PC) پر براؤزر بارز ختم کرنے کا جاوا اسکرپٹ -->
+<script>
+    (function(document, navigator, standalone) {
+        if ((standalone in navigator) && navigator[standalone]) {
+            document.addEventListener('click', function(e) {
+                var node = e.target;
+                while (node && node.nodeName !== 'A' && node.nodeName !== 'HTML') {
+                    node = node.parentNode;
+                }
+                if (node && node.nodeName === 'A' && 'href' in node && node.getAttribute('href') !== '#') {
+                    var href = node.getAttribute('href');
+                    if (href && !href.startsWith('javascript:')) {
+                        e.preventDefault();
+                        window.location.href = href;
+                    }
+                }
+            }, false);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var links = document.querySelectorAll('a');
+            links.forEach(function(link) {
+                link.setAttribute('target', '_self');
+            });
+        });
+    })(document, window.navigator, 'standalone');
+</script>
+
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
+<link rel="apple-touch-icon-precomposed" href="logo.png">
+    <script>
+        if (sessionStorage.getItem('rohan_session_active') !== 'true') {
+            window.location.href = './index.html';
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rohan Company - برانچز ڈیش بورڈ</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 20px 30px; 
+            direction: rtl; 
+            text-align: right; 
+            background-color: #080808; 
+            color: white; 
+            min-height: 100vh; 
+            width: 100%; 
+            max-width: 100%; 
+            box-sizing: border-box; 
+            transition: background-color 0.25s ease, color 0.25s ease; 
+        }
+        body.lang-en {
+            direction: ltr !important;
+            text-align: left !important;
+        }
+
+        .main-container { 
+            width: 100%; 
+            max-width: 100%; 
+            margin: 0 auto; 
+            background: #111111; 
+            padding: 30px; 
+            border-radius: 14px; 
+            border: 1px solid #222; 
+            box-sizing: border-box; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.8); 
+            transition: all 0.25s ease; 
+        }
+        .header-section { 
+            text-align: center; 
+            margin-bottom: 30px; 
+            padding-bottom: 20px; 
+            border-bottom: 2px solid #222; 
+            position: relative; 
+        }
+        .main-title { 
+            font-size: 34px; 
+            font-weight: bold; 
+            color: #ffffff; 
+            margin: 0; 
+            letter-spacing: 1px; 
+        }
+        .sub-title { 
+            font-size: 16px; 
+            color: #ffc107; 
+            margin-top: 8px; 
+            font-weight: bold; 
+        }
+        
+        /* 🖥️ کمپیوٹر کے لیے الگ الگ پوزیشنز */
+        .header-actions-left {
+            position: absolute;
+            left: 0;
+            top: 10px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .header-actions-right {
+            position: absolute;
+            right: 0;
+            top: 10px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        body.lang-en .header-actions-left { left: auto; right: 0; }
+        body.lang-en .header-actions-right { right: auto; left: 0; }
+
+        .btn-logout { 
+            padding: 8px 18px; 
+            background-color: #7f1d1d; 
+            color: #fca5a5; 
+            border: 1px solid #991b1b; 
+            border-radius: 8px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            text-decoration: none; 
+            font-size: 14px; 
+            transition: all 0.2s ease; 
+            display: inline-flex;
+            align-items: center;
+        }
+        .btn-logout:hover { background-color: #991b1b; color: white; }
+
+        .btn-theme-toggle { 
+            padding: 8px 18px; 
+            background-color: #222; 
+            color: #ffc107; 
+            border: 1px solid #444; 
+            border-radius: 25px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            font-size: 14px; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 8px; 
+            transition: all 0.2s ease; 
+        }
+        .btn-theme-toggle:hover { background-color: #333; transform: scale(1.05); }
+
+        .btn-lang-settings {
+            padding: 8px 20px;
+            background-color: #1a365d;
+            color: #90cdf4;
+            border: 1px solid #2b6cb0;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+        .btn-lang-settings:hover { background-color: #2b6cb0; color: #fff; transform: scale(1.05); }
+
+        .branch-grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 25px; 
+            margin-bottom: 20px; 
+        }
+        .branch-card { 
+            padding: 38px 20px 25px 20px; 
+            border-radius: 14px; 
+            text-align: center; 
+            cursor: pointer; 
+            transition: all 0.25s ease; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); 
+            display: block; 
+            border: 1px solid rgba(255,255,255,0.12); 
+            text-decoration: none; 
+            min-height: 170px;
+            position: relative;
+        }
+        .branch-card:hover { transform: translateY(-6px); box-shadow: 0 10px 25px rgba(0,0,0,0.85); }
+        .branch-icon { font-size: 44px; margin-bottom: 12px; }
+        
+        .branch-name { 
+            font-size: 21px; 
+            font-weight: bold; 
+            margin: 0 0 12px 0; 
+            word-break: break-word; 
+            color: #ffffff !important; 
+        }
+
+        .branch-status { 
+            font-size: 13.5px; 
+            padding: 5px 14px; 
+            border-radius: 20px; 
+            display: inline-block; 
+            background: rgba(0,0,0,0.45); 
+            color: #ffffff; 
+            font-weight: bold; 
+            max-width: 90%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .branch-lang-pill {
+            position: absolute;
+            bottom: 8px;
+            left: 10px;
+            font-size: 10px;
+            background: rgba(0,0,0,0.7);
+            color: #ffc107;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+        body.lang-en .branch-lang-pill { left: auto; right: 10px; }
+
+        .branch-num-badge {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            font-size: 13px;
+            background: rgba(0,0,0,0.65);
+            color: #ffd54f;
+            padding: 4px 12px;
+            border-radius: 14px;
+            font-weight: 800;
+            border: 1px solid rgba(255,213,79,0.35);
+            letter-spacing: 0.3px;
+        }
+        body.lang-en .branch-num-badge { right: auto; left: 12px; }
+
+        body.light-theme { background-color: #f3f4f6; color: #111827; }
+        body.light-theme .main-container { background: #ffffff; border-color: #e5e7eb; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        body.light-theme .header-section { border-bottom-color: #e5e7eb; }
+        body.light-theme .main-title { color: #111827; }
+        body.light-theme .sub-title { color: #d97706; }
+        body.light-theme .btn-theme-toggle { background-color: #f3f4f6; color: #111827; border-color: #d1d5db; }
+        body.light-theme .btn-lang-settings { background-color: #ebf8ff; color: #2b6cb0; border-color: #bee3f8; }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(4px);
+            padding: 15px;
+        }
+        .modal-box {
+            background: #181818;
+            border: 2px solid #28a745;
+            width: 100%;
+            max-width: 950px;
+            max-height: 92vh;
+            border-radius: 14px;
+            padding: 22px;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+            animation: fadeInModal 0.2s ease-out;
+        }
+        @keyframes fadeInModal {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        body.light-theme .modal-box {
+            background: #ffffff;
+            color: #111827;
+            border-color: #28a745;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+        body.light-theme .modal-header { border-bottom-color: #e5e7eb; }
+        .modal-title { font-size: 20px; font-weight: bold; color: #ffc107; margin: 0; }
+        .btn-modal-close {
+            background: transparent;
+            border: none;
+            color: #aaa;
+            font-size: 22px;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .btn-modal-close:hover { color: #ff5252; }
+
+        .modal-body {
+            overflow-y: auto;
+            flex: 1;
+            padding-right: 4px;
+        }
+        .settings-card-group {
+            background: #111;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 14px;
+            margin-bottom: 16px;
+        }
+        body.light-theme .settings-card-group {
+            background: #f9fafb;
+            border-color: #e5e7eb;
+        }
+        .group-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .radio-inline-box {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-top: 6px;
+        }
+        .radio-label {
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .branch-edit-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .branch-edit-table th, .branch-edit-table td {
+            padding: 8px 5px;
+            border-bottom: 1px solid #282828;
+            text-align: right;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+        body.lang-en .branch-edit-table th, 
+        body.lang-en .branch-edit-table td {
+            text-align: left;
+        }
+        body.light-theme .branch-edit-table th, 
+        body.light-theme .branch-edit-table td {
+            border-bottom-color: #e5e7eb;
+        }
+        .input-edit-field {
+            background: #202020;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 6px 8px;
+            border-radius: 5px;
+            font-size: 13px;
+            outline: none;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .input-edit-field:focus { border-color: #28a745; }
+        body.light-theme .input-edit-field {
+            background: #ffffff;
+            color: #111;
+            border-color: #d1d5db;
+        }
+        .input-num-field {
+            width: 50px !important;
+            text-align: center;
+            font-weight: bold;
+        }
+        .input-icon-field {
+            width: 45px !important;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .color-picker-box {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .color-picker-input {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 28px;
+            height: 28px;
+            background: transparent;
+            border: 1px solid #555;
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 0;
+        }
+        .color-picker-input::-webkit-color-swatch-wrapper { padding: 0; }
+        .color-picker-input::-webkit-color-swatch { border: none; border-radius: 3px; }
+
+        .modal-footer {
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px solid #333;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        body.light-theme .modal-footer { border-top-color: #e5e7eb; }
+        .btn-modal-save {
+            background: #28a745;
+            color: #fff;
+            border: none;
+            padding: 9px 24px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-modal-save:hover { background: #218838; transform: translateY(-1px); }
+
+        @media (max-width: 1050px) { 
+            .branch-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; } 
+        }
+
+        @media (max-width: 800px) { 
+            .branch-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; } 
+        }
+
+        /* 📱 موبائل لے آؤٹ: ماڈل، مارجن اور ہیڈنگ کا درست سائز */
+        @media (max-width: 500px) { 
+            body { padding: 6px; } 
+            .main-container { padding: 10px; } 
+            .header-section { 
+                padding-top: 44px; 
+                margin-bottom: 14px; 
+            }
+            
+            .header-actions-left {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                gap: 5px;
+            }
+            .header-actions-right {
+                position: static !important;
+                display: contents !important;
+            }
+
+            .btn-logout { 
+                flex: 1 1 0; 
+                text-align: center; 
+                justify-content: center; 
+                padding: 6px 4px; 
+                font-size: 11px; 
+                border-radius: 6px; 
+                order: 1; 
+                white-space: nowrap;
+            }
+            .btn-lang-settings { 
+                flex: 1 1 0; 
+                text-align: center; 
+                justify-content: center; 
+                padding: 6px 4px; 
+                font-size: 11px; 
+                border-radius: 6px; 
+                order: 2; 
+                white-space: nowrap;
+            }
+            .btn-theme-toggle { 
+                flex: 1 1 0; 
+                text-align: center; 
+                justify-content: center; 
+                padding: 6px 4px; 
+                font-size: 11px; 
+                border-radius: 6px; 
+                order: 3; 
+                white-space: nowrap;
+            }
+
+            body.lang-en .btn-logout { order: 3; }
+            body.lang-en .btn-lang-settings { order: 2; }
+            body.lang-en .btn-theme-toggle { order: 1; }
+
+            .main-title { font-size: 21px; } 
+            .sub-title { font-size: 12px; }
+            
+            .branch-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .branch-card { padding: 28px 10px 18px 10px; min-height: 130px; } 
+            .branch-icon { font-size: 32px; margin-bottom: 8px; }
+            .branch-name { font-size: 15px; margin: 0 0 8px 0; color: #ffffff !important; }
+            .branch-status { font-size: 11px; padding: 3px 10px; }
+            .branch-num-badge { font-size: 11px; padding: 2px 8px; top: 6px; right: 8px; }
+            body.lang-en .branch-num-badge { right: auto; left: 8px; }
+
+            /* ⚡ سیٹنگز ماڈل موبائل سکرین فکس */
+            .modal-overlay { 
+                padding: 4px !important; 
+            }
+            .modal-box { 
+                width: 100% !important; 
+                max-width: 100% !important; 
+                padding: 10px !important; 
+                border-radius: 10px !important; 
+                max-height: 96vh !important; 
+            }
+            .modal-header { 
+                padding-bottom: 8px !important; 
+                margin-bottom: 10px !important; 
+            }
+            .modal-title { 
+                font-size: 14.5px !important; 
+                white-space: nowrap !important; 
+                overflow: hidden !important; 
+                text-overflow: ellipsis !important; 
+                line-height: 1.2 !important; 
+            }
+            .btn-modal-close { 
+                font-size: 20px !important; 
+                padding: 0 4px !important; 
+            }
+            .settings-card-group { 
+                padding: 8px 6px !important; 
+                margin-bottom: 10px !important; 
+            }
+            .group-title { 
+                font-size: 12.5px !important; 
+                margin-bottom: 6px !important; 
+                white-space: nowrap !important; 
+                overflow: hidden !important; 
+                text-overflow: ellipsis !important; 
+            }
+            .radio-inline-box { 
+                gap: 12px !important; 
+                margin-top: 4px !important; 
+            }
+            .radio-label { 
+                font-size: 12.5px !important; 
+            }
+            .branch-edit-table { 
+                min-width: 580px !important; 
+                font-size: 11.5px !important; 
+            }
+            .branch-edit-table th, .branch-edit-table td { 
+                padding: 5px 3px !important; 
+            }
+            .input-edit-field { 
+                padding: 4px 6px !important; 
+                font-size: 11.5px !important; 
+            }
+            .modal-footer { 
+                margin-top: 10px !important; 
+                padding-top: 8px !important; 
+            }
+            .btn-modal-save { 
+                width: 100% !important; 
+                padding: 8px 12px !important; 
+                font-size: 14px !important; 
+                text-align: center !important; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="header-section">
+            <div class="header-actions-left">
+                <a href="./index.html" class="btn-logout" id="lblLogoutBtn" onclick="sessionStorage.removeItem('rohan_session_active')">🔒 لاگ آؤٹ</a>
+                <button type="button" class="btn-lang-settings" id="btnOpenSettings" onclick="openLanguageModal()">⚙️ ترمیم</button>
+                <button type="button" id="themeToggleBtn" class="btn-theme-toggle" onclick="toggleAppTheme()">☀️ لائٹ موڈ</button>
+            </div>
+            
+            <!-- کمپیوٹر پر سیٹنگز بٹن کو دائیں جانب رکھنے والا بلاک -->
+            <div class="header-actions-right"></div>
+
+            <h1 class="main-title">Rohan company</h1>
+            <div class="sub-title" id="lblSubTitle">(ماسٹر ڈیش بورڈ)</div>
+        </div>
+
+        <div class="branch-grid" id="branchGridContainer"></div>
+    </div>
+
+    <!-- 🌐 ماڈل پینل برائے سیٹنگز و مکمل برانچ ترمیم -->
+    <div class="modal-overlay" id="langModalOverlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 class="modal-title" id="mTitle">⚙️ سیٹنگز و برانچ ترمیم (Settings & Branches)</h3>
+                <button type="button" class="btn-modal-close" onclick="closeLanguageModal()">✕</button>
+            </div>
+            
+            <div class="modal-body">
+                <!-- ۱. پورے سسٹم کی بنیادی زبان -->
+                <div class="settings-card-group">
+                    <div class="group-title">
+                        <span>🌐</span> <span id="mGlobalTitle">پورے سسٹم کی بنیادی زبان (Global Language):</span>
+                    </div>
+                    <div class="radio-inline-box">
+                        <label class="radio-label">
+                            <input type="radio" name="global_lang" value="ur" id="radioUrdu" onchange="onGlobalRadioChange('ur')"> 🇵🇰 اردو (Urdu - RTL)
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="global_lang" value="en" id="radioEnglish" onchange="onGlobalRadioChange('en')"> 🇬🇧 English (LTR)
+                        </label>
+                    </div>
+                </div>
+
+                <!-- ۲. ہر برانچ کا مکمل ڈیٹا تبدیل کرنے کا ٹیبل -->
+                <div class="settings-card-group">
+                    <div class="group-title">
+                        <span>🏢</span> <span id="mBranchSpecificTitle">برانچز کا نام، نمبر، اونر، آئیکن، رنگ اور زبان تبدیل کریں:</span>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="branch-edit-table">
+                            <thead>
+                                <tr>
+                                    <th style="width:6%;">نمبر</th>
+                                    <th style="width:6%;">آئیکن</th>
+                                    <th style="width:22%;">اردو نام</th>
+                                    <th style="width:22%;">English Name</th>
+                                    <th style="width:16%;">اونر کا نام</th>
+                                    <th style="width:12%;">رنگ (Gradient)</th>
+                                    <th style="width:16%;">زبان</th>
+                                </tr>
+                            </thead>
+                            <tbody id="branchEditTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-modal-save" id="btnSaveLang" onclick="saveAllBranchSettings()">محفوظ کریں (Save All) ✅</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const defaultBranchesData = [
+            { id: 'branch_1', num: 1, ur: 'ڈرائی فروٹ ہاؤس', en: 'Dry Fruit House', owner: '', icon: '📦', color1: '#b78a82', color2: '#3d0f05' },
+            { id: 'branch_2', num: 2, ur: 'تانبا فیکٹری', en: 'Copper Factory', owner: '', icon: '⚡', color1: '#dc7c5b', color2: '#461a10' },
+            { id: 'branch_3', num: 3, ur: 'سلور برانچ', en: 'Silver Branch', owner: '', icon: '⛓️️', color1: '#8ea2ac', color2: '#0e3833' },
+            { id: 'branch_4', num: 4, ur: 'پیتل برانچ', en: 'Brass Branch', owner: '', icon: '🏺', color1: '#c7c07d', color2: '#302509' },
+            { id: 'branch_5', num: 5, ur: 'سکریپ گودام', en: 'Scrap Warehouse', owner: '', icon: '🏪', color1: '#607fad', color2: '#0d1f3d' },
+            { id: 'branch_6', num: 6, ur: 'دوبی برانچ', en: 'Dubai Branch', owner: '', icon: '🏭', color1: '#60988f', color2: '#2e4340' },
+            { id: 'branch_7', num: 7, ur: 'سلور بھٹی', en: 'Silver Furnace', owner: '', icon: '🏢', color1: '#927fa9', color2: '#1f053d' },
+            { id: 'branch_8', num: 8, ur: 'برانچ نمبر 8', en: 'Branch No. 8', owner: '', icon: '🏢', color1: '#755c69', color2: '#490c26' },
+            { id: 'branch_9', num: 9, ur: 'برانچ نمبر 9', en: 'Branch No. 9', owner: '', icon: '🏢', color1: '#323a32', color2: '#0a4516' },
+            { id: 'branch_10', num: 10, ur: 'برانچ نمبر 10', en: 'Branch No. 10', owner: '', icon: '🏢', color1: '#cca86d', color2: '#0a2841' },
+            { id: 'branch_11', num: 11, ur: 'برانچ نمبر 11', en: 'Branch No. 11', owner: '', icon: '🏢', color1: '#b49585', color2: '#47200d' },
+            { id: 'branch_12', num: 12, ur: 'برانچ نمبر 12', en: 'Branch No. 12', owner: '', icon: '🏢', color1: '#2e3b4e', color2: '#112948' },
+            { id: 'branch_13', num: 13, ur: 'برانچ نمبر 13', en: 'Branch No. 13', owner: '', icon: '🏢', color1: '#921b3f', color2: '#120743' },
+            { id: 'branch_14', num: 14, ur: 'برانچ نمبر 14', en: 'Branch No. 14', owner: '', icon: '🏢', color1: '#424242', color2: '#410a0a' },
+            { id: 'branch_15', num: 15, ur: 'برانچ نمبر 15', en: 'Branch No. 15', owner: '', icon: '🏢', color1: '#8085b8', color2: '#0d1450' },
+            { id: 'branch_16', num: 16, ur: 'برانچ نمبر 16', en: 'Branch No. 16', owner: '', icon: '🏢', color1: '#bbccb5', color2: '#142d07' },
+            { id: 'branch_17', num: 17, ur: 'برانچ نمبر 17', en: 'Branch No. 17', owner: '', icon: '🏢', color1: '#5c3a21', color2: '#27180c' },
+            { id: 'branch_18', num: 18, ur: 'برانچ نمبر 18', en: 'Branch No. 18', owner: '', icon: '🏢', color1: '#b1a87a', color2: '#3a3204' },
+            { id: 'branch_19', num: 19, ur: 'برانچ نمبر 19', en: 'Branch No. 19', owner: '', icon: '🏢', color1: '#a981aa', color2: '#41092f' },
+            { id: 'branch_20', num: 20, ur: 'برانچ نمبر 20', en: 'Branch No. 20', owner: '', icon: '🏢', color1: '#cd608f', color2: '#34081c' }
+        ];
+
+        function getBranchesData() {
+            let saved = localStorage.getItem('rohan_branches_custom_config_v2');
+            if (saved) {
+                try { return JSON.parse(saved); } catch(e){}
+            }
+            return defaultBranchesData;
+        }
+
+        function applyCurrentTheme() {
+            let savedTheme = localStorage.getItem('rohan_theme_mode') || 'dark';
+            let btn = document.getElementById('themeToggleBtn');
+            let themeMeta = document.querySelector('meta[name="theme-color"]');
+            let isEn = (localStorage.getItem('rohan_global_lang') === 'en');
+
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-theme');
+                if (btn) btn.innerHTML = isEn ? '🌙 Dark Mode' : '🌙 ڈارک موڈ';
+                if (themeMeta) themeMeta.setAttribute('content', '#f3f4f6');
+            } else {
+                document.body.classList.remove('light-theme');
+                if (btn) btn.innerHTML = isEn ? '☀️ Light Mode' : '☀️ لائٹ موڈ';
+                if (themeMeta) themeMeta.setAttribute('content', '#080808');
+            }
+        }
+
+        function toggleAppTheme() {
+            let currentTheme = localStorage.getItem('rohan_theme_mode') || 'dark';
+            let newTheme = (currentTheme === 'dark') ? 'light' : 'dark';
+            localStorage.setItem('rohan_theme_mode', newTheme);
+            applyCurrentTheme();
+        }
+
+        function renderBranchCards() {
+            let branches = getBranchesData();
+            let globalLang = localStorage.getItem('rohan_global_lang') || 'ur';
+            let branchOverrides = JSON.parse(localStorage.getItem('rohan_branch_lang_overrides')) || {};
+            let container = document.getElementById('branchGridContainer');
+            container.innerHTML = '';
+
+            branches.forEach(b => {
+                let targetLang = branchOverrides[b.id] || globalLang;
+                
+                let cleanUrName = (b.ur || '').replace(/برانچ نمبر \d+/g, '').replace(/#\d+/g, '').trim();
+                let cleanEnName = (b.en || '').replace(/Branch No\.? \d+/gi, '').replace(/#\d+/g, '').trim();
+                if (!cleanUrName) cleanUrName = `برانچ ${b.num}`;
+                if (!cleanEnName) cleanEnName = `Branch ${b.num}`;
+
+                let displayName = (targetLang === 'en') ? cleanEnName : cleanUrName;
+                let badgeText = (targetLang === 'en') ? `Branch No. ${b.num}` : `برانچ نمبر ${b.num}`;
+                let subText = b.owner && b.owner.trim() ? b.owner.trim() : (targetLang === 'en' ? 'Active Ledger' : 'ایکٹو کھاتہ');
+
+                let langPillHtml = '';
+                if (branchOverrides[b.id] && branchOverrides[b.id] !== globalLang) {
+                    langPillHtml = `<span class="branch-lang-pill">${branchOverrides[b.id] === 'en' ? 'ENG' : 'اردو'}</span>`;
+                }
+
+                let cardGradient = `linear-gradient(135deg, ${b.color1 || '#333333'}, ${b.color2 || '#111111'})`;
+
+                let card = document.createElement('div');
+                card.className = 'branch-card';
+                card.style.background = cardGradient;
+                card.setAttribute('data-branch', b.id);
+                card.onclick = function() { selectBranch(b.id, cleanUrName, cleanEnName, cardGradient, '#ffffff'); };
+
+                card.innerHTML = `
+                    <span class="branch-num-badge">${badgeText}</span>
+                    <div class="branch-icon">${b.icon || '🏢'}</div>
+                    <h3 class="branch-name">${displayName}</h3>
+                    <span class="branch-status">${subText}</span>
+                    ${langPillHtml}
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function applyCurrentLanguage() {
+            let globalLang = localStorage.getItem('rohan_global_lang') || 'ur';
+            let btnSettings = document.getElementById('btnOpenSettings');
+
+            if (globalLang === 'en') {
+                document.body.classList.add('lang-en');
+                document.documentElement.lang = 'en';
+                document.getElementById('lblLogoutBtn').innerText = '🔒 Logout';
+                document.getElementById('lblSubTitle').innerText = '(Master Dashboard)';
+                document.title = 'Rohan Company - Branches Dashboard';
+                if (btnSettings) btnSettings.innerHTML = '⚙️ Setting';
+            } else {
+                document.body.classList.remove('lang-en');
+                document.documentElement.lang = 'ur';
+                document.getElementById('lblLogoutBtn').innerText = '🔒 لاگ آؤٹ';
+                document.getElementById('lblSubTitle').innerText = '(ماسٹر ڈیش بورڈ)';
+                document.title = 'Rohan Company - برانچز ڈیش بورڈ';
+                if (btnSettings) btnSettings.innerHTML = '⚙️ ترمیم';
+            }
+
+            renderBranchCards();
+            applyCurrentTheme();
+        }
+
+        let initialGlobalLangAtOpen = 'ur';
+
+        function openLanguageModal() {
+            let userRole = sessionStorage.getItem('rohan_user_role') || 'admin';
+            if (userRole === 'owner') {
+                alert("⚠️ آپ کے پاس سیٹنگز اور ترمیم کی اجازت نہیں ہے! یہ اختیار صرف ایڈمن کے لیے ہے۔");
+                return;
+            }
+
+            let globalLang = localStorage.getItem('rohan_global_lang') || 'ur';
+            initialGlobalLangAtOpen = globalLang;
+
+            let branchOverrides = JSON.parse(localStorage.getItem('rohan_branch_lang_overrides')) || {};
+            let branches = getBranchesData();
+
+            if (globalLang === 'en') {
+                document.getElementById('radioEnglish').checked = true;
+            } else {
+                document.getElementById('radioUrdu').checked = true;
+            }
+
+            let tbody = document.getElementById('branchEditTableBody');
+            tbody.innerHTML = '';
+
+            branches.forEach(b => {
+                let currentLangVal = branchOverrides[b.id] || globalLang;
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>
+                        <input type="number" class="input-edit-field input-num-field" id="num_${b.id}" value="${b.num}">
+                    </td>
+                    <td>
+                        <input type="text" class="input-edit-field input-icon-field" id="icon_${b.id}" value="${b.icon || '🏢'}">
+                    </td>
+                    <td>
+                        <input type="text" class="input-edit-field" id="ur_${b.id}" value="${b.ur}">
+                    </td>
+                    <td>
+                        <input type="text" class="input-edit-field" id="en_${b.id}" value="${b.en}">
+                    </td>
+                    <td>
+                        <input type="text" class="input-edit-field" id="owner_${b.id}" placeholder="اونر کا نام" value="${b.owner || ''}">
+                    </td>
+                    <td>
+                        <div class="color-picker-box">
+                            <input type="color" class="color-picker-input" id="c1_${b.id}" value="${b.color1 || '#444444'}" title="پہلا رنگ">
+                            <input type="color" class="color-picker-input" id="c2_${b.id}" value="${b.color2 || '#111111'}" title="دوسرا رنگ">
+                        </div>
+                    </td>
+                    <td>
+                        <select class="input-edit-field branch-lang-select" id="lang_${b.id}" data-custom-changed="false" onchange="this.setAttribute('data-custom-changed', 'true')">
+                            <option value="ur" ${currentLangVal === 'ur' ? 'selected' : ''}>اردو</option>
+                            <option value="en" ${currentLangVal === 'en' ? 'selected' : ''}>English</option>
+                        </select>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('langModalOverlay').style.display = 'flex';
+        }
+
+        function onGlobalRadioChange(newGlobalLang) {
+            document.querySelectorAll('.branch-lang-select').forEach(select => {
+                if (select.getAttribute('data-custom-changed') !== 'true') {
+                    select.value = newGlobalLang;
+                }
+            });
+        }
+
+        function closeLanguageModal() {
+            document.getElementById('langModalOverlay').style.display = 'none';
+        }
+
+        function saveAllBranchSettings() {
+            let userRole = sessionStorage.getItem('rohan_user_role') || 'admin';
+            if (userRole === 'owner') {
+                alert("⚠️ آپ کو تبدیلیاں محفوظ کرنے کی اجازت نہیں ہے!");
+                return;
+            }
+
+            let selectedGlobal = document.querySelector('input[name="global_lang"]:checked').value;
+            let isGlobalChanged = (selectedGlobal !== initialGlobalLangAtOpen);
+            localStorage.setItem('rohan_global_lang', selectedGlobal);
+
+            let branches = getBranchesData();
+            let overrides = {};
+
+            branches.forEach(b => {
+                let numEl = document.getElementById(`num_${b.id}`);
+                let iconEl = document.getElementById(`icon_${b.id}`);
+                let urEl = document.getElementById(`ur_${b.id}`);
+                let enEl = document.getElementById(`en_${b.id}`);
+                let ownerEl = document.getElementById(`owner_${b.id}`);
+                let c1El = document.getElementById(`c1_${b.id}`);
+                let c2El = document.getElementById(`c2_${b.id}`);
+                let langEl = document.getElementById(`lang_${b.id}`);
+
+                if (numEl) b.num = parseInt(numEl.value) || b.num;
+                if (iconEl) b.icon = iconEl.value.trim() || '🏢';
+                if (urEl) b.ur = urEl.value.trim() || b.ur;
+                if (enEl) b.en = enEl.value.trim() || b.en;
+                if (ownerEl) b.owner = ownerEl.value.trim();
+                if (c1El) b.color1 = c1El.value;
+                if (c2El) b.color2 = c2El.value;
+
+                if (langEl) {
+                    let branchChosenLang = langEl.value;
+                    let wasManuallyChanged = (langEl.getAttribute('data-custom-changed') === 'true');
+
+                    if (isGlobalChanged && !wasManuallyChanged) {
+                        overrides[b.id] = selectedGlobal;
+                    } else {
+                        overrides[b.id] = branchChosenLang;
+                    }
+                }
+            });
+
+            localStorage.setItem('rohan_branches_custom_config_v2', JSON.stringify(branches));
+            localStorage.setItem('rohan_branch_lang_overrides', JSON.stringify(overrides));
+
+            closeLanguageModal();
+            applyCurrentLanguage();
+            alert('✅ تمام برانچز کے نام، نمبر، رنگ، اونر اور زبان کامیابی سے محفوظ ہو گئے!');
+        }
+
+        function selectBranch(branchId, branchUrduName, branchEnName, bgGradient, textColor) {
+            let globalLang = localStorage.getItem('rohan_global_lang') || 'ur';
+            let branchOverrides = JSON.parse(localStorage.getItem('rohan_branch_lang_overrides')) || {};
+            
+            let activeBranchLang = branchOverrides[branchId] || globalLang;
+            let finalName = (activeBranchLang === 'en') ? branchEnName : branchUrduName;
+
+            localStorage.setItem('active_branch_id', branchId);
+            localStorage.setItem('active_branch_name', finalName);
+            localStorage.setItem('active_branch_lang', activeBranchLang);
+            localStorage.setItem('active_branch_bg', bgGradient);
+            localStorage.setItem('active_branch_text', textColor);
+
+            window.location.href = './home.html'; 
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            let userRole = sessionStorage.getItem('rohan_user_role') || 'admin';
+            let btnSettings = document.getElementById('btnOpenSettings');
+            if (userRole === 'owner' && btnSettings) {
+                btnSettings.style.display = 'none';
+            }
+
+            applyCurrentLanguage();
+        });
+    </script>
+</body>
+</html>

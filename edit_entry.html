@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Rohan Company">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#080808">
+
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+
+    <title>انٹری میں ترمیم یا ڈیلیٹ</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 15px; 
+            direction: rtl; 
+            text-align: right; 
+            background-color: #0d0d0d; 
+            color: white; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            transition: background-color 0.25s ease, color 0.25s ease;
+        }
+
+        body.lang-en {
+            direction: ltr !important;
+            text-align: left !important;
+        }
+
+        .edit-container { 
+            width: 100%; 
+            max-width: 480px; 
+            background: #1a1a1a; 
+            padding: 25px; 
+            border-radius: 12px; 
+            border: 1px solid #ffc107; 
+            box-shadow: 0 4px 20px rgba(255,193,7,0.2); 
+            transition: all 0.25s ease;
+        }
+
+        /* 🔙 اوپر ہیڈر بار: دائیں ٹائٹل اور بائیں جانب نیلا بیک بٹن */
+        .header-top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            transition: border-color 0.25s ease;
+        }
+        .edit-title { 
+            color: #ffc107; 
+            font-size: 20px; 
+            font-weight: bold; 
+            margin: 0;
+        }
+        .btn-top-back {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            font-size: 13.5px;
+            font-weight: bold;
+            padding: 6px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .btn-top-back:hover {
+            background-color: #0056b3;
+            color: #ffffff;
+        }
+
+        /* 🔘 جمع / بنام ٹائپ سلیکٹر */
+        .type-selector-box {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .type-option {
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid #444;
+            background: #222;
+            color: #ccc;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        .type-option.active-jama {
+            background-color: #1b5e20 !important;
+            border-color: #00e676 !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 10px rgba(0,230,118,0.3);
+        }
+        .type-option.active-bnam {
+            background-color: #7f1d1d !important;
+            border-color: #ff5252 !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 10px rgba(255,82,82,0.3);
+        }
+
+        .form-group { margin-bottom: 14px; position: relative; }
+        .form-group label { display: block; margin-bottom: 6px; color: #aaa; font-size: 14px; font-weight: bold; }
+        .form-group input { 
+            width: 100%; 
+            padding: 12px; 
+            background: #222; 
+            border: 1px solid #444; 
+            border-radius: 6px; 
+            color: white; 
+            font-size: 16px; 
+            font-weight: bold;
+            outline: none; 
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .form-group input:focus { border-color: #ffc107; }
+
+        /* ⚡ گاہک تلاش کرنے کی ڈراپ ڈاؤن لسٹ */
+        .dropdown-list {
+            position: absolute; 
+            top: 100%; 
+            left: 0; 
+            right: 0; 
+            background: #222; 
+            border: 1px solid #555; 
+            border-radius: 6px; 
+            max-height: 200px; 
+            overflow-y: auto; 
+            z-index: 1000; 
+            display: none; 
+            padding: 0; 
+            margin: 4px 0 0 0; 
+            list-style: none; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .dropdown-list li {
+            padding: 10px 12px; 
+            color: white; 
+            cursor: pointer; 
+            border-bottom: 1px solid #333; 
+            font-size: 14.5px; 
+            font-weight: bold; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+        }
+        body.lang-en .dropdown-list li {
+            text-align: left;
+        }
+        .dropdown-list li:hover {
+            background: #ffc107; 
+            color: black;
+        }
+        .dropdown-list li .badge-acc {
+            font-size: 11px;
+            background: #111;
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid #444;
+            color: #ffc107;
+        }
+        .dropdown-list li:hover .badge-acc {
+            background: black;
+            color: white;
+            border-color: black;
+        }
+
+        /* 💾 محفوظ بٹن */
+        .btn-save { 
+            width: 100%; 
+            padding: 14px; 
+            background-color: #28a745; 
+            color: white; 
+            border: none; 
+            border-radius: 6px; 
+            font-size: 17px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            margin-top: 10px; 
+            transition: background 0.2s ease;
+        }
+        .btn-save:hover { opacity: 0.9; }
+        
+        /* 🗑️ ڈیلیٹ بٹن */
+        .btn-delete-entry { 
+            width: 100%; 
+            padding: 14px; 
+            background-color: #dc3545; 
+            color: white; 
+            border: none; 
+            border-radius: 6px; 
+            font-size: 17px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            margin-top: 10px; 
+            transition: background 0.2s ease;
+        }
+        .btn-delete-entry:hover { background-color: #bd2130; }
+
+        /* ☀️ لائٹ موڈ سیٹنگز */
+        body.light-theme {
+            background-color: #f3f4f6;
+            color: #111827;
+        }
+        body.light-theme .edit-container {
+            background: #ffffff;
+            border-color: #ffc107;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        body.light-theme .header-top-bar {
+            border-bottom-color: #e5e7eb;
+        }
+        body.light-theme .edit-title {
+            color: #b45309;
+        }
+        body.light-theme .btn-top-back {
+            background-color: #007bff;
+            color: white;
+        }
+        body.light-theme .btn-top-back:hover {
+            background-color: #0056b3;
+        }
+        body.light-theme .form-group label {
+            color: #4b5563;
+        }
+        body.light-theme .form-group input {
+            background: #f9fafb;
+            color: #111827;
+            border-color: #d1d5db;
+        }
+        body.light-theme .form-group input:focus {
+            border-color: #b45309;
+            background: #ffffff;
+        }
+        body.light-theme .dropdown-list {
+            background: #ffffff;
+            border-color: #d1d5db;
+        }
+        body.light-theme .dropdown-list li {
+            color: #111827;
+            border-bottom-color: #f3f4f6;
+        }
+        body.light-theme .dropdown-list li:hover {
+            background: #ffc107;
+            color: black;
+        }
+        body.light-theme .type-option {
+            background: #f3f4f6;
+            border-color: #d1d5db;
+            color: #4b5563;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="edit-container" id="mainEditEntryContainer">
+        <!-- 🔙 اوپر ٹائٹل اور لیفٹ سائیڈ پر نیلا واپس بٹن -->
+        <div class="header-top-bar">
+            <div class="edit-title" id="pageTitle">✏️ انٹری میں ترمیم یا ڈیلیٹ</div>
+            <a href="./customer_ledger.html" class="btn-top-back" id="btnBack">🔙 واپس</a>
+        </div>
+        
+        <form id="editEntryForm" onsubmit="saveEditedRecord(event)">
+            <!-- ⚡ جمع اور بنام کا لائیو سلیکٹر -->
+            <div class="form-group">
+                <label id="lblEntryType">کھاتے کی نوعیت (Type):</label>
+                <div class="type-selector-box">
+                    <div class="type-option" id="optBnam" onclick="setEntryType('BNAM')">🔴 بنام رقم (BNAM)</div>
+                    <div class="type-option" id="optJama" onclick="setEntryType('JAMA')">🟢 جمع رقم (JAMA)</div>
+                </div>
+                <input type="hidden" id="editType" value="BNAM">
+            </div>
+
+            <div class="form-group">
+                <label id="lblEditDate">تاریخ (Date):</label>
+                <input type="date" id="editDate">
+            </div>
+            
+            <!-- ⚡ ٹائپ کرنے والا گاہک کا سرچ ان پٹ -->
+            <div class="form-group">
+                <label id="lblCustInput">کھاتہ / نام گاہک (ٹائپ کر کے تبدیل کریں):</label>
+                <input type="text" id="editCustomerInput" placeholder="🔍 نام یا کھاتہ نمبر ٹائپ کریں..." autocomplete="off">
+                <input type="hidden" id="selectedCustomerValue">
+                <ul class="dropdown-list" id="customerDropdownList"></ul>
+            </div>
+
+            <div class="form-group">
+                <label id="lblDetails">تفصیل (Details):</label>
+                <input type="text" id="editDetails" placeholder="تفصیل لکھیں...">
+            </div>
+            <div class="form-group">
+                <label id="lblPcs">پیس / کارٹن (Pcs):</label>
+                <input type="number" id="editPcs" placeholder="0" oninput="calculateTotal()">
+            </div>
+            <div class="form-group">
+                <label id="lblWeight">وزن (Weight):</label>
+                <input type="number" step="0.001" id="editWeight" placeholder="0.00" oninput="calculateTotal()">
+            </div>
+            <div class="form-group">
+                <label id="lblRate">ریٹ (Rate):</label>
+                <input type="number" step="0.01" id="editRate" placeholder="0" oninput="calculateTotal()">
+            </div>
+            <div class="form-group">
+                <label id="lblTotalAmount">کل رقم (Total Amount):</label>
+                <input type="number" id="editTotalAmount" placeholder="0">
+            </div>
+
+            <!-- 🔘 ایکشن بٹنز -->
+            <button type="submit" class="btn-save" id="btnSave">💾 ترمیم محفوظ کریں</button>
+            <button type="button" class="btn-delete-entry" id="btnDelete" onclick="deleteCurrentRecord()">🗑️ یہ انٹری ڈیلیٹ کریں</button>
+        </form>
+    </div>
+
+    <script>
+        function applySavedTheme() {
+            let savedTheme = localStorage.getItem('rohan_theme_mode') || 'dark';
+            let themeMeta = document.querySelector('meta[name="theme-color"]');
+
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-theme');
+                if (themeMeta) themeMeta.setAttribute('content', '#f3f4f6');
+            } else {
+                document.body.classList.remove('light-theme');
+                if (themeMeta) themeMeta.setAttribute('content', '#080808');
+            }
+        }
+        applySavedTheme();
+
+        let activeBranchId = localStorage.getItem('active_branch_id') || 'branch_1';
+        let branchOverrides = JSON.parse(localStorage.getItem('rohan_branch_lang_overrides')) || {};
+        let globalLang = localStorage.getItem('rohan_global_lang') || 'ur';
+        let activeBranchLang = localStorage.getItem('active_branch_lang') || branchOverrides[activeBranchId] || globalLang;
+        let isEn = (activeBranchLang === 'en');
+
+        // 🌐 زبان اپلائی کرنا
+        if (isEn) {
+            document.body.classList.add('lang-en');
+            document.documentElement.lang = 'en';
+            document.title = 'Edit or Delete Entry';
+
+            document.getElementById('pageTitle').innerText = '✏️ Edit or Delete Entry';
+            document.getElementById('btnBack').innerText = '🔙 Back';
+
+            document.getElementById('lblEntryType').innerText = 'Account Type:';
+            document.getElementById('optBnam').innerText = '🔴 Debit (BNAM)';
+            document.getElementById('optJama').innerText = '🟢 Credit (JAMA)';
+
+            document.getElementById('lblEditDate').innerText = 'Date:';
+            document.getElementById('lblCustInput').innerText = 'Customer / Account (Type to change):';
+            document.getElementById('editCustomerInput').placeholder = '🔍 Type name or account number...';
+
+            document.getElementById('lblDetails').innerText = 'Description (Details):';
+            document.getElementById('editDetails').placeholder = 'Enter description...';
+
+            document.getElementById('lblPcs').innerText = 'Pcs / Carton:';
+            document.getElementById('lblWeight').innerText = 'Weight:';
+            document.getElementById('lblRate').innerText = 'Rate:';
+            document.getElementById('lblTotalAmount').innerText = 'Total Amount:';
+
+            document.getElementById('btnSave').innerText = '💾 Save Changes';
+            document.getElementById('btnDelete').innerText = '🗑️ Delete This Entry';
+        } else {
+            document.body.classList.remove('lang-en');
+            document.documentElement.lang = 'ur';
+            document.title = 'انٹری میں ترمیم یا ڈیلیٹ';
+        }
+
+        // 🎨 برانچ کا کسٹم رنگ لاگو کرنا
+        let savedBranchesConfig = localStorage.getItem('rohan_branches_custom_config_v2');
+        if (savedBranchesConfig) {
+            try {
+                let branches = JSON.parse(savedBranchesConfig);
+                let currentBranch = branches.find(b => b.id === activeBranchId);
+                if (currentBranch && currentBranch.color1) {
+                    let primaryColor = currentBranch.color1;
+                    let container = document.getElementById('mainEditEntryContainer');
+                    container.style.borderColor = primaryColor;
+                    container.style.boxShadow = `0 4px 20px ${primaryColor}35`;
+
+                    let saveBtn = document.getElementById('btnSave');
+                    if (saveBtn) saveBtn.style.backgroundColor = primaryColor;
+                }
+            } catch(e){}
+        }
+
+        let customerKey = activeBranchId + '_customer_list';
+        let detailsKey = activeBranchId + '_customer_details';
+        let bnamRecordsKey = activeBranchId + '_bnam_records';
+        let editIndex = localStorage.getItem('edit_record_index');
+        let records = JSON.parse(localStorage.getItem(bnamRecordsKey)) || [];
+
+        if (sessionStorage.getItem('rohan_user_role') === 'owner') {
+            alert(isEn ? "⚠️ You are not authorized to edit or delete entries!" : "⚠️ آپ کو انٹری تبدیل یا ڈیلیٹ کرنے کی اجازت نہیں ہے!");
+            window.location.href = './customer_ledger.html';
+        }
+
+        const custInput = document.getElementById('editCustomerInput');
+        const hiddenCustVal = document.getElementById('selectedCustomerValue');
+        const dropdownUl = document.getElementById('customerDropdownList');
+
+        let customers = JSON.parse(localStorage.getItem(customerKey));
+        if (!customers || customers.length === 0) {
+            customers = JSON.parse(localStorage.getItem('factory_customers')) || [];
+        }
+        let customerDetails = JSON.parse(localStorage.getItem(detailsKey)) || [];
+
+        function renderDropdown(filterText = '') {
+            dropdownUl.innerHTML = '';
+            let filtered = customers.filter(name => {
+                let info = customerDetails.find(c => c.name.toLowerCase() === name.toLowerCase());
+                let acc = info && info.accountNo ? String(info.accountNo).toLowerCase() : '';
+                return name.toLowerCase().includes(filterText) || acc.includes(filterText);
+            });
+
+            if (filtered.length === 0) {
+                let li = document.createElement('li');
+                li.style.color = '#888';
+                li.innerText = isEn ? 'No customer found!' : 'کوئی گاہک نہیں ملا!';
+                dropdownUl.appendChild(li);
+                return;
+            }
+
+            filtered.forEach(name => {
+                let info = customerDetails.find(c => c.name.toLowerCase() === name.toLowerCase());
+                let acc = info && info.accountNo ? info.accountNo : '';
+
+                let li = document.createElement('li');
+                let badgeLabel = isEn ? 'Acc #' : 'کھاتہ #';
+                li.innerHTML = `<span>👤 ${name}</span> ${acc ? `<span class="badge-acc">${badgeLabel}${acc}</span>` : ''}`;
+                li.onmousedown = function() {
+                    custInput.value = name;
+                    hiddenCustVal.value = name;
+                    dropdownUl.style.display = 'none';
+                };
+                dropdownUl.appendChild(li);
+            });
+        }
+
+        custInput.addEventListener('focus', function() {
+            renderDropdown(this.value.toLowerCase().trim());
+            dropdownUl.style.display = 'block';
+        });
+
+        custInput.addEventListener('input', function() {
+            let val = this.value.toLowerCase().trim();
+            hiddenCustVal.value = this.value.trim();
+            renderDropdown(val);
+            dropdownUl.style.display = 'block';
+        });
+
+        custInput.addEventListener('blur', function() {
+            setTimeout(() => { dropdownUl.style.display = 'none'; }, 200);
+        });
+
+        function setEntryType(type) {
+            document.getElementById('editType').value = type;
+            let optJama = document.getElementById('optJama');
+            let optBnam = document.getElementById('optBnam');
+
+            if (type === 'JAMA') {
+                optJama.classList.add('active-jama');
+                optBnam.classList.remove('active-bnam');
+            } else {
+                optBnam.classList.add('active-bnam');
+                optJama.classList.remove('active-jama');
+            }
+        }
+
+        if (editIndex !== null && records[editIndex]) {
+            let item = records[editIndex];
+            
+            let currentType = (item.type === 'JAMA') ? 'JAMA' : 'BNAM';
+            setEntryType(currentType);
+
+            document.getElementById('editDate').value = item.date || "";
+            
+            custInput.value = item.customerName || "";
+            hiddenCustVal.value = item.customerName || "";
+
+            document.getElementById('editDetails').value = item.details !== "-" ? item.details : "";
+            document.getElementById('editPcs').value = item.pcs || "";
+            document.getElementById('editWeight').value = item.weight || "";
+            document.getElementById('editRate').value = item.rate !== "-" ? item.rate : "";
+            document.getElementById('editTotalAmount').value = item.totalAmount || "";
+        } else {
+            alert(isEn ? "Record not found!" : "ریکارڈ نہیں ملا!");
+            window.location.href = './customer_ledger.html';
+        }
+
+        function calculateTotal() {
+            let pcs = parseFloat(document.getElementById('editPcs').value) || 0;
+            let weight = parseFloat(document.getElementById('editWeight').value) || 0;
+            let rate = parseFloat(document.getElementById('editRate').value) || 0;
+            let total = 0;
+
+            if (rate > 0) {
+                if (weight > 0) {
+                    if (rate >= 30000) { total = (weight / 37.324) * rate; } 
+                    else { total = weight * rate; }
+                } else if (pcs > 0) { total = pcs * rate; }
+            }
+            if (total > 0) {
+                document.getElementById('editTotalAmount').value = Math.round(total);
+            }
+        }
+
+        function saveEditedRecord(e) {
+            e.preventDefault();
+            if (editIndex !== null && records[editIndex]) {
+                let chosenCustomer = hiddenCustVal.value.trim() || custInput.value.trim();
+
+                if (!chosenCustomer) {
+                    alert(isEn ? "⚠️ Please enter customer name!" : "⚠️ براہ کرم گاہک کا نام درج کریں!");
+                    return;
+                }
+
+                records[editIndex].type = document.getElementById('editType').value;
+                records[editIndex].customerName = chosenCustomer;
+                records[editIndex].date = document.getElementById('editDate').value || "";
+                records[editIndex].details = document.getElementById('editDetails').value.trim() || "-";
+                records[editIndex].pcs = parseFloat(document.getElementById('editPcs').value) || 0;
+                records[editIndex].weight = parseFloat(document.getElementById('editWeight').value) || 0;
+                records[editIndex].rate = document.getElementById('editRate').value.trim() || "-";
+                records[editIndex].totalAmount = parseFloat(document.getElementById('editTotalAmount').value) || 0;
+
+                localStorage.setItem(bnamRecordsKey, JSON.stringify(records));
+                
+                localStorage.setItem('active_ledger_customer', chosenCustomer);
+
+                alert(isEn ? "✅ Entry updated and transferred to correct account!" : "✅ انٹری کامیابی سے اپڈیٹ اور صحیح کھاتے میں منتقل ہو گئی ہے!");
+                window.location.href = './customer_ledger.html';
+            }
+        }
+
+        function deleteCurrentRecord() {
+            let delConfirm = isEn ? "Are you sure you want to delete this entry?" : "کیا آپ واقعی یہ انٹری ڈیلیٹ کرنا چاہتے ہیں؟";
+            if (confirm(delConfirm)) {
+                if (editIndex !== null && records[editIndex]) {
+                    records.splice(editIndex, 1);
+                    localStorage.setItem(bnamRecordsKey, JSON.stringify(records));
+                    alert(isEn ? "🗑️ Entry deleted successfully!" : "🗑️ انٹری کامیابی سے ڈیلیٹ کر دی گئی ہے!");
+                    window.location.href = './customer_ledger.html';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
