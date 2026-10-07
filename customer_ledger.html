@@ -546,7 +546,7 @@
         }
     }
 
-    /* 🖨️ پرنٹ اور پی ڈی ایف سیٹنگز */
+    /* 🖨️ پرنٹ اور پی ڈی ایف سیٹنگز (موبائل اور پی سی دونوں کے لیے مضبوط اور ریپیٹ ایبل) */
     @media print {
         @page { 
             size: A4 portrait; 
@@ -584,6 +584,7 @@
             border: none !important; 
             background: transparent !important; 
             overflow: visible !important; 
+            display: block !important;
         }
         .shared-inner-content { 
             min-width: 100% !important; 
@@ -601,7 +602,7 @@
             table-layout: auto !important; 
         }
 
-        /* ⚡ thead کو display: table-header-group رکھنے سے ہر صفحے پر گاہک کا نام اور لوگو خودکار دہرایا جائے گا */
+        /* ⚡ thead کو display: table-header-group رکھنے سے موبائل اور کمپیوٹر دونوں پر ہر صفحے پر بار بار آئے گا */
         thead { 
             display: table-header-group !important; 
         }
@@ -620,20 +621,15 @@
             padding: 8px 0 6px 0 !important;
         }
 
-        .print-header-layout-table {
+        /* ⚡ موبائل کے لیے فلیکس ہیڈر بار جو کبھی بھی کٹتی نہیں ہے */
+        .print-header-flex-box {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
             width: 100% !important;
-            border: none !important;
             margin: 0 !important;
             padding: 0 !important;
-            background: transparent !important;
-            border-collapse: collapse !important;
             direction: ltr !important;
-        }
-        .print-header-layout-table td {
-            border: none !important;
-            padding: 2px 0 !important;
-            background: transparent !important;
-            vertical-align: middle !important;
         }
 
         .print-meta-left {
@@ -644,45 +640,43 @@
             color: #333333 !important;
             line-height: 1.3 !important;
             white-space: nowrap !important;
-            width: 25% !important;
+            flex: 1 !important;
         }
 
         .print-title-center {
             text-align: center !important;
             direction: rtl !important;
-            font-size: 18px !important;
+            font-size: 17px !important;
             font-weight: 900 !important;
             color: #000000 !important;
-            line-height: 1.5 !important;
-            width: 50% !important;
+            line-height: 1.4 !important;
+            flex: 2 !important;
             word-break: normal !important;
             white-space: normal !important;
-            padding: 4px 0 !important;
+            padding: 0 4px !important;
         }
         body.lang-en .print-title-center {
             direction: ltr !important;
         }
 
         .print-acc-badge {
-            font-size: 12px !important;
+            font-size: 11.5px !important;
             font-weight: normal !important;
             color: #444444 !important;
-            margin-left: 6px !important;
+            margin-left: 4px !important;
             display: inline-block !important;
         }
         .print-branch {
-            font-size: 12px !important;
+            font-size: 11.5px !important;
             font-weight: normal !important;
             color: #444444 !important;
-            margin-right: 6px !important;
+            margin-right: 4px !important;
         }
 
-        /* ⚡ پرنٹ میں اوپر دائیں جانب لوگو شو کرنا (ہر صفحے پر) */
-        .print-logo-cell-right { 
-            width: 25% !important; 
+        .print-logo-box-right { 
+            flex: 1 !important; 
             text-align: right !important;
             direction: rtl !important;
-            padding-right: 2px !important;
         }
         .print-logo-img {
             height: 42px !important;
@@ -818,18 +812,16 @@
                 
                 <table id="ledgerTable">
                     <thead id="ledgerThead">
-                        <!-- ⚡ پرنٹ ریپیٹ ہیڈر رو: ہر صفحے پر گاہک کا نام، برانچ اور دائیں طرف لوگو خودکار دہرائے گی -->
+                        <!-- ⚡ پرنٹ ریپیٹ ہیڈر رو: موبائل اور پی سی دونوں پر ہر صفحے پر گاہک کا نام، برانچ اور دائیں طرف لوگو خودکار دہرائے گی -->
                         <tr class="print-repeat-row">
                             <th id="printRepeatTh" colspan="9" class="print-repeat-cell">
-                                <table class="print-header-layout-table">
-                                    <tr>
-                                        <td class="print-meta-left" id="printLedgerDateTime"></td>
-                                        <td class="print-title-center" id="printHeaderTitleCell"></td>
-                                        <td class="print-logo-cell-right">
-                                            <img src="logo.png" alt="Logo" class="print-logo-img" onerror="this.style.display='none'">
-                                        </td>
-                                    </tr>
-                                </table>
+                                <div class="print-header-flex-box">
+                                    <div class="print-meta-left" id="printLedgerDateTime"></div>
+                                    <div class="print-title-center" id="printHeaderTitleCell"></div>
+                                    <div class="print-logo-box-right">
+                                        <img src="logo.png" alt="Logo" class="print-logo-img" onerror="this.style.display='none'">
+                                    </div>
+                                </div>
                             </th>
                         </tr>
                         <tr class="table-columns-header">
@@ -888,7 +880,6 @@
         let detailsKey = activeBranchId + '_customer_details';
         let deletedKey = activeBranchId + '_deleted_customers';
 
-        // ⚙ ہوم پیج کی ماسٹر کنفیگریشن حاصل کرنا
         let masterSettings = JSON.parse(localStorage.getItem(`rohan_branch_master_settings_${activeBranchId}`)) || {
             cols: {
                 pcs: { visible: true, name: 'پیس' },
@@ -914,7 +905,6 @@
 
         let amountCustomName = (masterSettings.cols && masterSettings.cols.amount && masterSettings.cols.amount.name) ? masterSettings.cols.amount.name : '';
 
-        // 🎛️ کالمز کی مرئیت (Visibility) سیٹ کرنا
         document.getElementById('thExtra').style.display = showExtra ? '' : 'none';
         document.getElementById('thPcs').style.display = showPcs ? '' : 'none';
         document.getElementById('thWeight').style.display = showWeight ? '' : 'none';
@@ -923,7 +913,6 @@
         document.getElementById('colSumPcs').style.display = showPcs ? '' : 'none';
         document.getElementById('colSumWeight').style.display = showWeight ? '' : 'none';
 
-        // 🎛️ تینوں باکسز کی پوزیشن لاگو کرنا (اسکرین پر)
         function applyLedgerBoxPlacement() {
             let summaryBox = document.getElementById('footerSummaryBox');
             let controlsWrapper = document.getElementById('ledgerControlsWrapper');
@@ -962,7 +951,7 @@
 
             let penToolbarLabel = document.getElementById('lblPenToolbar');
             if (penToolbarLabel) penToolbarLabel.innerText = 'Highlighter Pen:';
-            document.getElementById('penBtnYellow').innerText = '🖊️ Yellow';
+            document.getElementById('penBtnYellow').innerText = '🖊️️ Yellow';
             document.getElementById('penBtnBlue').innerText = '🖊️ Blue';
             document.getElementById('penBtnRed').innerText = '🖊️ Red';
             document.getElementById('penBtnEraser').innerText = '❌ Clear';
@@ -1025,10 +1014,8 @@
         let fullTitleHtml = `${accBadgeHtml} 👤 ${currentCustomer} <span class="branch-sub-tag">(${activeBranchName})</span>`;
         document.getElementById('ledgerCustomerTitle').innerHTML = fullTitleHtml;
         
-        // ⚡ پرنٹ ہیڈر پر گاہک کا نام اور برانچ سیٹ کرنا (جو ہر صفحے پر آئے گا)
         document.getElementById('printHeaderTitleCell').innerHTML = `${printAccBadgeHtml} 👤 ${currentCustomer} <span class="print-branch">(${activeBranchName})</span>`;
 
-        // 🎨 برانچ کا کسٹم رنگ لاگو کرنا
         let savedBranchesConfig = localStorage.getItem('rohan_branches_custom_config_v2');
         if (savedBranchesConfig) {
             try {
@@ -1292,7 +1279,7 @@
                         ${Math.abs(runningBalance).toLocaleString('en-US')} ${balSuffix}
                     </td>
                     <td class="action-cell">
-                        <span class="btn-pen-edit" onclick="editSingleRecord(event, ${index})" title="${isEn ? 'Edit or Delete' : 'ترمیم یا ڈیلیٹ کریں'}">✏️</span>
+                        <span class="btn-pen-edit" onclick="editSingleRecord(event, ${index})" title="${isEn ? 'Edit or Delete' : 'ترمیم یا ڈیلیٹ کریں'}">✏️️</span>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -1379,7 +1366,7 @@
         window.editSingleRecord = function(event, idx) {
             if (event) event.stopPropagation();
             if (userRole === 'owner') {
-                alert(isEn ? "⚠️ You are not authorized to edit or delete entries!" : "⚠️ آپ کے پاس انٹری ایڈٹ یا ڈیلیٹ کرنے کی اجازت نہیں ہے!");
+                alert(isEn ? "⚠️️ You are not authorized to edit or delete entries!" : "⚠️ آپ کے پاس انٹری ایڈٹ یا ڈیلیٹ کرنے کی اجازت نہیں ہے!");
                 return;
             }
             let bnamRecords = JSON.parse(localStorage.getItem(bnamRecordsKey)) || [];
@@ -1403,7 +1390,7 @@
 
         window.handleAccountDeletion = function() {
             if (userRole === 'owner') {
-                alert(isEn ? "⚠️ You are not authorized to delete accounts!" : "⚠️ آپ کے پاس کھاتہ ڈیلیٹ کرنے کی اجازت نہیں ہے!");
+                alert(isEn ? "⚠️️ You are not authorized to delete accounts!" : "⚠️ آپ کے پاس کھاتہ ڈیلیٹ کرنے کی اجازت نہیں ہے!");
                 return;
             }
 
