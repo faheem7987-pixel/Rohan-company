@@ -596,7 +596,7 @@
             width: 100% !important; 
             border-collapse: collapse !important; 
             background: transparent !important; 
-            table-layout: fixed !important; 
+            table-layout: auto !important; 
         }
 
         thead { 
@@ -609,26 +609,25 @@
 
         tr { 
             page-break-inside: avoid !important; 
-            break-inside: avoid !important;
+            break-inside: avoid !important; 
         }
 
         .print-repeat-row { 
             display: table-row !important; 
-            page-break-inside: avoid !important;
-            break-inside: avoid !important;
+            page-break-inside: avoid !important; 
+            break-inside: avoid !important; 
         }
-        .print-repeat-cell {
+        
+        .print-head-cell {
             background-color: #ffffff !important;
             color: #000000 !important;
             border: none !important;
             border-bottom: 2px solid #000000 !important;
-            padding: 4px 0 6px 0 !important;
+            padding: 4px 2px !important;
+            vertical-align: middle !important;
         }
 
-        .print-box-left {
-            display: block !important;
-            float: left !important;
-            width: 25% !important;
+        .print-meta-left {
             text-align: left !important;
             direction: ltr !important;
             font-size: 8.5px !important;
@@ -636,13 +635,9 @@
             color: #333333 !important;
             line-height: 1.3 !important;
             white-space: nowrap !important;
-            padding-top: 8px !important;
         }
 
-        .print-box-center {
-            display: block !important;
-            float: left !important;
-            width: 50% !important;
+        .print-title-center {
             text-align: center !important;
             direction: rtl !important;
             font-size: 18px !important;
@@ -651,19 +646,16 @@
             line-height: 1.4 !important;
             word-break: normal !important;
             white-space: normal !important;
-            padding: 4px 2px !important;
         }
-        body.lang-en .print-box-center {
+        body.lang-en .print-title-center {
             direction: ltr !important;
         }
 
-        .print-box-right { 
-            display: block !important;
-            float: right !important;
-            width: 25% !important;
+        .print-logo-box-right { 
             text-align: right !important;
             direction: rtl !important;
         }
+        
         .print-logo-img {
             height: 60px !important;
             width: auto !important;
@@ -681,6 +673,7 @@
             margin-left: 4px !important;
             display: inline-block !important;
         }
+        
         .print-branch {
             font-size: 11.5px !important;
             font-weight: normal !important;
@@ -812,15 +805,12 @@
                 <table id="ledgerTable">
                     <thead id="ledgerThead">
                         <tr class="print-repeat-row">
-                            <th id="printRepeatTh" colspan="9" class="print-repeat-cell">
-                                <div style="width: 100%; min-height: 65px; display: block;">
-                                    <div class="print-box-left" id="printLedgerDateTime"></div>
-                                    <div class="print-box-center" id="printHeaderTitleCell"></div>
-                                    <div class="print-box-right">
-                                        <img src="logo.png" alt="Logo" class="print-logo-img" onerror="this.style.display='none'">
-                                    </div>
-                                    <div style="clear: both;"></div>
-                                </div>
+                            <th colspan="2" class="print-head-cell print-meta-left" id="printLedgerDateTime"></th>
+                            <th id="printCenterTh" colspan="5" class="print-head-cell print-title-center">
+                                <span id="printHeaderTitleCell"></span>
+                            </th>
+                            <th colspan="2" class="print-head-cell print-logo-box-right">
+                                <img src="logo.png" alt="Logo" class="print-logo-img" onerror="this.style.display='none'">
                             </th>
                         </tr>
                         <tr class="table-columns-header">
@@ -1196,8 +1186,11 @@
 
             let runningBalance = 0;
             let totalCols = getVisibleColumnCount();
-            let repeatTh = document.getElementById('printRepeatTh');
-            if (repeatTh) repeatTh.setAttribute('colspan', totalCols);
+            let centerTh = document.getElementById('printCenterTh');
+            if (centerTh) {
+                let centerColspan = totalCols - 4;
+                centerTh.setAttribute('colspan', centerColspan > 1 ? centerColspan : 1);
+            }
 
             if (customerRecords.length === 0) {
                 let noDataMsg = isEn ? "No entry exists in this account yet!" : "اس کھاتے میں ابھی کوئی انٹری موجود نہیں ہے!";
