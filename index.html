@@ -1,41 +1,42 @@
 <!DOCTYPE html>
 <html lang="ur">
 <head>
-   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Rohan Company">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#080808">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Rohan Company">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#080808">
 
-<link rel="icon" type="image/png" href="logo.png">
-<link rel="apple-touch-icon" href="logo.png">
-<link rel="apple-touch-icon" sizes="180x180" href="logo.png">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="logo.png">
 
-<script>
-    // ⚡ آئی فون پر سفاری کے نیویگیشن بارز کو مکمل طور پر بلاک کرنے کا اسکرپٹ
-    (function(document, window) {
-        var standalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
-        
-        if (standalone) {
-            document.addEventListener('click', function(e) {
-                var target = e.target;
-                while (target && target.nodeName !== 'A' && target.nodeName !== 'HTML') {
-                    target = target.parentNode;
-                }
-                
-                if (target && target.nodeName === 'A') {
-                    var href = target.getAttribute('href');
-                    // اگر لنک اسی ویب سائٹ کا ہے تو سفاری کھولنے کے بجائے ایپ میں ہی کھولیں
-                    if (href && !href.startsWith('http') && !href.startsWith('javascript:') && href !== '#') {
-                        e.preventDefault();
-                        window.location.href = href;
+    <script>
+        // ⚡ آئی فون پر سفاری کے نیویگیشن بارز کو مکمل طور پر بلاک کرنے کا اسکرپٹ
+        (function(document, window) {
+            var standalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+            
+            if (standalone) {
+                document.addEventListener('click', function(e) {
+                    var target = e.target;
+                    while (target && target.nodeName !== 'A' && target.nodeName !== 'HTML') {
+                        target = target.parentNode;
                     }
-                }
-            }, true);
-        }
-    })(document, window);
-</script>
+                    
+                    if (target && target.nodeName === 'A') {
+                        var href = target.getAttribute('href');
+                        // اگر لنک اسی ویب سائٹ کا ہے تو سفاری کھولنے کے بجائے ایپ میں ہی کھولیں
+                        if (href && !href.startsWith('http') && !href.startsWith('javascript:') && href !== '#') {
+                            e.preventDefault();
+                            window.location.href = href;
+                        }
+                    }
+                }, true);
+            }
+        })(document, window);
+    </script>
+
     <!-- 1. کمپیوٹر براؤزر ٹیب کے لیے -->
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="shortcut icon" type="image/png" href="logo.png">
@@ -60,7 +61,7 @@
             justify-content: center; 
             align-items: center; 
             min-height: 100vh; 
-            transition: background-color 0.25s ease, color 0.25s ease;
+            transition: background-color 0.25s ease, color 0.25s ease; 
             position: relative;
         }
         
@@ -104,7 +105,15 @@
         /* HD اور کرسٹل کلیئر ڈسپلے کے لیے */
         .company-logo { width: 110px; height: auto; margin-bottom: 15px; object-fit: contain; }
         
-        .login-title { font-size: clamp(24px, 3.5vw, 32px); font-weight: bold; color: #ffc107; margin-bottom: 5px; letter-spacing: 1px; }
+        /* نام کا رنگ زرد (Yellow) */
+        .login-title { 
+            font-size: clamp(24px, 3.5vw, 32px); 
+            font-weight: bold; 
+            color: #ffc107; 
+            margin-bottom: 5px; 
+            letter-spacing: 1px; 
+        }
+
         .login-subtitle { font-size: clamp(13px, 1.8vw, 16px); color: #ccc; margin-bottom: 25px; }
         .input-group { margin-bottom: 18px; text-align: right; }
         .input-group label { display: block; margin-bottom: 6px; color: #aaa; font-size: 14px; }
@@ -123,7 +132,7 @@
         body.light-theme .theme-toggle-btn {
             background: #ffffff;
             border-color: #d1d5db;
-            color: #b45309;
+            color: #d97706;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         body.light-theme .login-container {
@@ -131,8 +140,10 @@
             border-color: #e5e7eb;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
+        
+        /* لائٹ تھیم میں بھی نام کا رنگ خوبصورت گولڈن-زرد رکھا گیا ہے تاکہ سفید پر صاف نظر آئے */
         body.light-theme .login-title {
-            color: #b45309;
+            color: #d97706;
         }
         body.light-theme .login-subtitle {
             color: #6b7280;
@@ -146,8 +157,8 @@
             color: #111827;
         }
         body.light-theme .input-group input:focus {
-            border-color: #b45309;
-            box-shadow: 0 0 0 3px rgba(180, 83, 9, 0.15);
+            border-color: #d97706;
+            box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
         }
     </style>
 </head>
@@ -160,7 +171,7 @@
         <!-- اصل PNG لوگو -->
         <img src="logo.png" alt="Rohan Company Logo" class="company-logo">
         <div class="login-title">ROHAN COMPANY</div>
-        <div class="login-subtitle">فیکٹری کھاتہ مینجمنٹ systeem</div>
+        <div class="login-subtitle">فیکٹری کھاتہ مینجمنٹ سسٹم</div>
         
         <form id="loginForm" onsubmit="handleLogin(event)">
             <div class="input-group">
@@ -173,7 +184,7 @@
                 <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
             </div>
             
-            <button type="submit" class="btn-login">سستم میں داخل ہوں</button>
+            <button type="submit" class="btn-login">سسٹم میں داخل ہوں</button>
             <div id="errorMsg" class="error-message">❌ یوزر نیم یا پاس ورڈ درست نہیں ہے!</div>
         </form>
     </div>
